@@ -38,7 +38,8 @@ def generate_visualisation_file(result, object_list, animation_profile, action_l
         transfered_stage = transfer(one_stage, object_list, panel_size, shift)
         transfered_stage["stageName"] = item["stageName"]
         transfered_stage["stageInfo"] = item["stageInfo"]
-        transfered_stage["cost"] = item["cost"]
+        transfered_stage["traversed-cost"] = action_list[index]["traversed-cost"]
+        transfered_stage["total-cost"] = action_list[index]["total-cost"]
         if (index == len(action_list)):
             transfered_stage["isFinal"] = "true"
         else:

@@ -27,6 +27,7 @@ import urllib.request
 import json
 import sys
 import os
+import math
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/../' ))
 sys.path.append(os.path.dirname(__file__))
 import Parser_Functions
@@ -107,7 +108,7 @@ def replace_action_cost(problem_file, plan):
         problem_split = problem_file.split("\n")
         total_cost = 0
         for action in action_list:
-            traverse_cost = 99
+            traverse_cost = math.inf
             str_split = action["name"][1:-1].split(" ")
             str_cost = "(traverse-cost " + str_split[1] + " " + str_split[2] + ")"
             for line in problem_split:
