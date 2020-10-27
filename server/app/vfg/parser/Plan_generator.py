@@ -119,4 +119,12 @@ def replace_action_cost(problem_file, plan):
             total_cost += traverse_cost
             action["total-cost"] = total_cost
         plan["result"]["plan"] = action_list
+        # print(action_list[0])
+    else:
+        action_list = plan["result"]["plan"]
+        for action in action_list:
+            action["traverse-cost"] = math.inf
+            action["total-cost"] = math.inf
+        plan["result"]["plan"] = action_list
+        # print(action_list[0])
     return plan
