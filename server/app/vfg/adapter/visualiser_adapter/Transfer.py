@@ -43,12 +43,12 @@ def generate_visualisation_file(result, object_list, animation_profile, action_l
             transfered_stage["stepCost"] = "no step cost"
             transfered_stage["totalCost"] = "no total cost"
         else:
-            if (action_list[index-1]["traverse-cost"] == math.inf):
+            if (action_list[index-1]["stepCost"] == math.inf):
                 transfered_stage["stepCost"] = "no step cost"
                 transfered_stage["totalCost"] = "no total cost"
             else:
-                transfered_stage["stepCost"] = action_list[index-1]["traverse-cost"]
-                transfered_stage["totalCost"] = action_list[index-1]["total-cost"]
+                transfered_stage["stepCost"] = action_list[index-1]["stepCost"]
+                transfered_stage["totalCost"] = action_list[index-1]["totalCost"]
         if (index == len(action_list)):
             transfered_stage["isFinal"] = "true"
         else:

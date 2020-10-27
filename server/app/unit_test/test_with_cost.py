@@ -62,6 +62,12 @@ def test():
     result = Solver.get_visualisation_dic(stages, animation_profile, plan['result']['plan'], problem_dic)
     visualisation_file = Transfer.generate_visualisation_file(result, list(objects_dic.keys()), animation_profile,
                                                               plan['result']['plan'])
+
+    with open(os.path.abspath(os.path.dirname(__file__) + '/../unit_test/' + "test_cost.vfg"), "w") as f:
+        json.dump(visualisation_file, f)
+
+    # print(domain_file.split("("))
+
     return visualisation_file
 
 if __name__ == "__main__":

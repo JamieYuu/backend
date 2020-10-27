@@ -70,7 +70,8 @@ def get_plan(domain_file, problem_file,url):
         raise Exception("Failed to get the plan/solution --  " + error)
     else:
         #added to check if contains action cost
-        plan = replace_action_cost(problem_file, plan)
+        plan = replace_action_cost(problem_file, domain_file, plan)
+        # print(plan)
         return plan
 
 
@@ -100,31 +101,36 @@ def get_plan_actions(domain_file, actions):
     result["result"]["plan"]=plan
     return result
 
-def replace_action_cost(problem_file, plan):
+def replace_action_cost(problem_file, domain_file, plan):
     # adds traverse-cost and total-cost
     # when multiple costs exit for same route, chooses the smallest of them
     if "cost" in problem_file:
+        cost_stynx = "(increase total-cost traverse-cost)\n"
+        step_stynx = "traverse-cost"
+
         action_list = plan["result"]["plan"]
         problem_split = problem_file.split("\n")
         total_cost = 0
         for action in action_list:
             traverse_cost = math.inf
             str_split = action["name"][1:-1].split(" ")
-            str_cost = "(traverse-cost " + str_split[1] + " " + str_split[2] + ")"
+            str_cost = "(" + step_stynx + " " + str_split[1] + " " + str_split[2] + ")"
             for line in problem_split:
                 if str_cost in line:
                     traverse_cost = min(int(line.split(str_cost,1)[1][1:-1]), traverse_cost)
-            action["traverse-cost"] = traverse_cost
+            action["stepCost"] = traverse_cost
             #print(traverse_cost)
             total_cost += traverse_cost
-            action["total-cost"] = total_cost
+            action["totalCost"] = total_cost
+            action["action"] = action["action"].replace(cost_stynx, "")
         plan["result"]["plan"] = action_list
         # print(action_list[0])
     else:
         action_list = plan["result"]["plan"]
         for action in action_list:
-            action["traverse-cost"] = math.inf
-            action["total-cost"] = math.inf
+            action["stepCost"] = math.inf
+            action["totalCost"] = math.inf
+            # action["action"].replace(cost_stynx, "")
         plan["result"]["plan"] = action_list
         # print(action_list[0])
     return plan
